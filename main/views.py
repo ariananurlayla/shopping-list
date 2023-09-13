@@ -3,6 +3,8 @@ from main.forms import ProductForm
 from django.urls import reverse
 from django.shortcuts import render
 from main.models import Product
+from django.http import HttpResponse
+from django.core import serializers
 
 # Create your views here.
 def show_main(request):
@@ -25,3 +27,7 @@ def create_product(request):
 
     context = {'form': form}
     return render(request, "create_product.html", context)
+
+def show_xml(request):
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
