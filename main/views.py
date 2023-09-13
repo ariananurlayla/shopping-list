@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from main.forms import ProductForm
 from django.urls import reverse
 from django.shortcuts import render
+from main.models import Product
 
 # Create your views here.
 def show_main(request):
