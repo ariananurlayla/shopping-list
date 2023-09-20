@@ -8,7 +8,7 @@ from django.shortcuts import render
 from main.models import Product
 from django.http import HttpResponse
 from django.core import serializers
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def show_main(request):
@@ -72,3 +72,7 @@ def login_user(request):
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
     return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')
