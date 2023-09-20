@@ -9,8 +9,11 @@ from main.models import Product
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/login')
+
 def show_main(request):
     products = Product.objects.all()
 
