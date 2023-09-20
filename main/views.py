@@ -18,10 +18,10 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/login')
 
 def show_main(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(user=request.user)
 
     context = {
-        'name': 'Ariana Nurlayla Syabandini',
+        'name': request.user.username,
         'class': 'PBP C',
         'products': products,
         'last_login': request.COOKIES['last_login'],
@@ -33,7 +33,9 @@ def create_product(request):
     form = ProductForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        form.save()
+        product = form.save(commit=False)
+        product.user = request.user
+        product.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
     context = {'form': form}
